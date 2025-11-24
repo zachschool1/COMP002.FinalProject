@@ -13,17 +13,53 @@ function buttonClick(event) {
     let clickedButton = event.target;
     let buttonValue = clickedButton.textContent;
 //ok i have the text value of the specific thing i clicked, so from here I can start using them to concatenate to value1 or 2, i think i would need to do logic to where if the first clicked is 0 or like an operator then it wont keep going on.
+//this is the clear function, maybe i will separate it later
+    if (buttonValue === "C") {
+        value1 = "";
+        display.textContent = "";
+        operator = "";
+        result = "";
+        return;
+    }
 
-    if (buttonValue !== "0" || buttonValue !== NaN) {
-        value1 += buttonValue;
-        display.textContent = value1;
+    if (buttonValue === "-" || buttonValue === "+" || buttonValue === "/" || buttonValue === "*" || buttonValue === "=" && value1 !== "") {
+        operator.textContent = buttonValue.textContent;
+        value2 = value1;
+        value1 = "";
+    }
+    //why does work \/ but not as --------\/?
+    if (buttonValue != "-" || buttonValue !== "+" || buttonValue != "/" || buttonValue != "*" || buttonValue != "="){
+        value1 += buttonValue;        
     }
 
 
+    //maybe use switch idea from below except only for /*-+= to put in operator variable and change input from value1 to value2
+
+    console.log("value1: " + value1, "operator: " + operator, "value2: " + value2);
+
+    display.textContent = value1;
 }
-
-
-
+//an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
+// switch:
+    // case "C":
+        // value1 = "";
+        // display.textContent = "";
+        // operator = "";
+        // result = "";
+        // break;
+    // case "=": calculate
+    // case "+": put + in operator variable and start inputing to value2
+    // case "-": put + in operator variable and start inputing to value2
+    // case "/": put + in operator variable and start inputing to value2
+    // case "*": put + in operator variable and start inputing to value2
+    // case "1":
+    // case "2":
+    // case "3":
+    // case "4":
+    // case "5": all of these will pretty much just concat into the input and display
+    // case "6":
+    // case "7":
+    // case "8":
+    // case "9":
 calculator.addEventListener("mousedown", buttonClick);
-//im not sure how I would structure this to be like ok if the person clicks the operator symbols, then start concatenating to value 2.
 

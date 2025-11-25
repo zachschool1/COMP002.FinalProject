@@ -1,5 +1,6 @@
 let display = document.getElementById("display");
 let calculator = document.getElementById("calculator");
+let lastResult = document.getElementById("last-result-display");
 //basically have the first value become concatenated as a string and then when i press the +-/* buttons it will change from value1 to value2 and do it based on whatever was pressed
 let value1 ="";
 let value2 ="";
@@ -7,24 +8,21 @@ let operator = "";
 let result = "";
 let displayValue = "";
 let lastExpression = "";
-//so i have blank num 1 num 2 operator and result to calculate everything, when i can set it up, it will be something like 
 
-//function that calls when you press the =, it will take value1, whichever operator you used, and value 2 and convert to number, maybe it does that previously, and then it will do the operation and put it in the return value and also at the end it will clear local storage and add the new final express to that including the answer.
 
 function buttonClick(event) {
     let clickedButton = event.target;
     let buttonValue = clickedButton.textContent;
-
-
-    //maybe use switch idea from below except only for /*-+= to put in operator variable and change input from value1 to value2
-
 
     //an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
     switch (buttonValue) {
         case "C":
             clearCalculator();
             break;
-    // case "=": calculate
+        case "=":
+            displayValue +=buttonValue;
+            calculateValues();
+            break;
         case "+":
         case "-":
         case "/":
@@ -32,6 +30,10 @@ function buttonClick(event) {
             handleOperator(buttonValue);
             break;
         case "0":
+            //if no value1 or value2, do nothing. this fixes leading 0s
+            if (!value1) {
+                break;
+            }
         case "1":
         case "2":
         case "3":
@@ -47,12 +49,11 @@ function buttonClick(event) {
         default:
             break;
     }
-    display.textContent = displayValue;
+    display.textContent = displayValue || 0;
 
-
-    console.log("value1: " + value1, "operator: " + operator, "value2: " + value2);
-
-
+    console.log("value1: " + value1, "operator: " + operator, "value2: " + value2, "result " + result);
+    lastExpression = `${displayValue}${result}`;
+    console.log(lastExpression);
 }
 
 function clearCalculator() {
@@ -66,14 +67,44 @@ function clearCalculator() {
 }
 
 function handleOperator(symbol) {
-    //if there is no value1, meaning no numbers pressed, it wont handle an operator
-    if (!value1){
+    //if there is no value1, meaning no numbers pressed, it wont handle an operator. also if an operator exists it wont do anything either.
+    if (!value1 || operator){
          return;
     }
+
     displayValue += symbol;
     value2 = value1;
     operator = symbol;
     value1 = "";
+}
+
+function calculateValues() {
+    if (value1 && operator && value2) {
+        let firstInputValue = parseFloat(value2);
+        let secondInputValue = parseFloat(value1);
+        let finalResult = 0;
+
+        switch (operator) {
+            case "+":
+                finalResult = firstInputValue + secondInputValue;
+                break;
+            case "-":
+                finalResult = firstInputValue - secondInputValue;
+                break;
+            case "*":
+                finalResult = firstInputValue * secondInputValue;
+                break;
+            case "/":
+                if (secondInputValue !== 0){
+                finalResult = firstInputValue / secondInputValue;
+                break;                    
+                }
+            default:
+                break;
+        }
+        result = finalResult;
+        displayValue += `${result}`;
+    }
 }
 
 calculator.addEventListener("mousedown", buttonClick);

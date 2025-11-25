@@ -1,12 +1,18 @@
 let display = document.getElementById("display");
 let calculator = document.getElementById("calculator");
 let lastResult = document.getElementById("last-result-display");
+let localLastExpression = localStorage.getItem("lastExpression");
+
+if (localLastExpression) {
+    lastResult.textContent = localLastExpression;
+}
 //basically have the first value become concatenated as a string and then when i press the +-/* buttons it will change from value1 to value2 and do it based on whatever was pressed
 let value1 ="";
 let value2 ="";
 let operator = "";
 let result = "";
 let displayValue = "";
+
 
 
 function buttonClick(event) {
@@ -112,25 +118,3 @@ function calculateValues() {
 }
 
 calculator.addEventListener("mousedown", buttonClick);
-//******************************************************************************************/
-//come back to this if needed later
-//ok i have the text value of the specific thing i clicked, so from here I can start using them to concatenate to value1 or 2, i think i would need to do logic to where if the first clicked is 0 or like an operator then it wont keep going on.
-//this is the clear function, maybe i will separate it later
-    // if (buttonValue === "C") {
-    //     value1 = "";
-    //     value2 = "";
-    //     display.textContent = "";
-    //     operator = "";
-    //     result = "";
-    //     return;
-    // }
-
-    // if (buttonValue == "-" || buttonValue == "+" || buttonValue == "/" || buttonValue == "*" && !operator) {
-    //     operator = buttonValue;
-    //     value2 = value1;
-    //     value1 = "";
-    // }
-    // //why does work \/ but not as --------\/?
-    // if (buttonValue != "-" || buttonValue !== "+" || buttonValue != "/" || buttonValue != "*" || buttonValue != "="){
-    //     value1 += buttonValue;        
-    // }

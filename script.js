@@ -5,7 +5,8 @@ let value1 ="";
 let value2 ="";
 let operator = "";
 let result = "";
-let lastExpression = `${value1} ${operator} ${value2} = ${result}`;
+let displayValue = "";
+let lastExpression = "";
 //so i have blank num 1 num 2 operator and result to calculate everything, when i can set it up, it will be something like 
 
 //function that calls when you press the =, it will take value1, whichever operator you used, and value 2 and convert to number, maybe it does that previously, and then it will do the operation and put it in the return value and also at the end it will clear local storage and add the new final express to that including the answer.
@@ -13,55 +14,76 @@ let lastExpression = `${value1} ${operator} ${value2} = ${result}`;
 function buttonClick(event) {
     let clickedButton = event.target;
     let buttonValue = clickedButton.textContent;
-//ok i have the text value of the specific thing i clicked, so from here I can start using them to concatenate to value1 or 2, i think i would need to do logic to where if the first clicked is 0 or like an operator then it wont keep going on.
-//this is the clear function, maybe i will separate it later
-    if (buttonValue === "C") {
-        value1 = "";
-        value2 = "";
-        display.textContent = "";
-        operator = "";
-        result = "";
-        return;
-    }
-
-    if (buttonValue == "-" || buttonValue == "+" || buttonValue == "/" || buttonValue == "*" && !operator) {
-        operator = buttonValue;
-        value2 = value1;
-        value1 = "";
-    }
-    //why does work \/ but not as --------\/?
-    if (buttonValue != "-" || buttonValue !== "+" || buttonValue != "/" || buttonValue != "*" || buttonValue != "="){
-        value1 += buttonValue;        
-    }
 
 
     //maybe use switch idea from below except only for /*-+= to put in operator variable and change input from value1 to value2
 
+
+    //an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
+    switch (buttonValue) {
+        case "C":
+            value1 = "";
+            value2 = "";
+            display.textContent = "";
+            operator = "";
+            result = "";
+            lastExpression ="";
+            displayValue = "";
+            break;
+    // case "=": calculate
+        case "+":
+            displayValue += buttonValue;
+            value2 = value1;
+            operator = buttonValue;
+            value1 = "";
+            break;
+        // case "-": put + in operator variable and start inputing to value2
+        // case "/": put + in operator variable and start inputing to value2
+        // case "*": put + in operator variable and start inputing to value2
+        case "0":
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5": 
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+            value1 += buttonValue;
+            displayValue += buttonValue;
+            break;
+        default:
+            break;
+    }
+    display.textContent = displayValue;
+
+
     console.log("value1: " + value1, "operator: " + operator, "value2: " + value2);
 
-    display.textContent = lastExpression;
-}
-//an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
-// switch:
-    // case "C":
-        // value1 = "";
-        // display.textContent = "";
-        // operator = "";
-        // result = "";
-        // break;
-    // case "=": calculate
-    // case "+": put + in operator variable and start inputing to value2
-    // case "-": put + in operator variable and start inputing to value2
-    // case "/": put + in operator variable and start inputing to value2
-    // case "*": put + in operator variable and start inputing to value2
-    // case "1":
-    // case "2":
-    // case "3":
-    // case "4":
-    // case "5": all of these will pretty much just concat into the input and display
-    // case "6":
-    // case "7":
-    // case "8":
-    // case "9":
-calculator.addEventListener("mousedown", buttonClick);
 
+}
+
+calculator.addEventListener("mousedown", buttonClick);
+//******************************************************************************************/
+//come back to this if needed later
+//ok i have the text value of the specific thing i clicked, so from here I can start using them to concatenate to value1 or 2, i think i would need to do logic to where if the first clicked is 0 or like an operator then it wont keep going on.
+//this is the clear function, maybe i will separate it later
+    // if (buttonValue === "C") {
+    //     value1 = "";
+    //     value2 = "";
+    //     display.textContent = "";
+    //     operator = "";
+    //     result = "";
+    //     return;
+    // }
+
+    // if (buttonValue == "-" || buttonValue == "+" || buttonValue == "/" || buttonValue == "*" && !operator) {
+    //     operator = buttonValue;
+    //     value2 = value1;
+    //     value1 = "";
+    // }
+    // //why does work \/ but not as --------\/?
+    // if (buttonValue != "-" || buttonValue !== "+" || buttonValue != "/" || buttonValue != "*" || buttonValue != "="){
+    //     value1 += buttonValue;        
+    // }

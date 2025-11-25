@@ -22,24 +22,15 @@ function buttonClick(event) {
     //an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
     switch (buttonValue) {
         case "C":
-            value1 = "";
-            value2 = "";
-            display.textContent = "";
-            operator = "";
-            result = "";
-            lastExpression ="";
-            displayValue = "";
+            clearCalculator();
             break;
     // case "=": calculate
         case "+":
-            displayValue += buttonValue;
-            value2 = value1;
-            operator = buttonValue;
-            value1 = "";
+        case "-":
+        case "/":
+        case "*":
+            handleOperator(buttonValue);
             break;
-        // case "-": put + in operator variable and start inputing to value2
-        // case "/": put + in operator variable and start inputing to value2
-        // case "*": put + in operator variable and start inputing to value2
         case "0":
         case "1":
         case "2":
@@ -62,6 +53,27 @@ function buttonClick(event) {
     console.log("value1: " + value1, "operator: " + operator, "value2: " + value2);
 
 
+}
+
+function clearCalculator() {
+    value1 = "";
+    value2 = "";
+    display.textContent = "";
+    operator = "";
+    result = "";
+    lastExpression ="";
+    displayValue = "";
+}
+
+function handleOperator(symbol) {
+    //if there is no value1, meaning no numbers pressed, it wont handle an operator
+    if (!value1){
+         return;
+    }
+    displayValue += symbol;
+    value2 = value1;
+    operator = symbol;
+    value1 = "";
 }
 
 calculator.addEventListener("mousedown", buttonClick);

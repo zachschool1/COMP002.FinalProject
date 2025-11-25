@@ -5,6 +5,7 @@ let value1 ="";
 let value2 ="";
 let operator = "";
 let result = "";
+let lastExpression = `${value1} ${operator} ${value2} = ${result}`;
 //so i have blank num 1 num 2 operator and result to calculate everything, when i can set it up, it will be something like 
 
 //function that calls when you press the =, it will take value1, whichever operator you used, and value 2 and convert to number, maybe it does that previously, and then it will do the operation and put it in the return value and also at the end it will clear local storage and add the new final express to that including the answer.
@@ -16,14 +17,15 @@ function buttonClick(event) {
 //this is the clear function, maybe i will separate it later
     if (buttonValue === "C") {
         value1 = "";
+        value2 = "";
         display.textContent = "";
         operator = "";
         result = "";
         return;
     }
 
-    if (buttonValue === "-" || buttonValue === "+" || buttonValue === "/" || buttonValue === "*" || buttonValue === "=" && value1 !== "") {
-        operator.textContent = buttonValue.textContent;
+    if (buttonValue == "-" || buttonValue == "+" || buttonValue == "/" || buttonValue == "*" && !operator) {
+        operator = buttonValue;
         value2 = value1;
         value1 = "";
     }
@@ -37,7 +39,7 @@ function buttonClick(event) {
 
     console.log("value1: " + value1, "operator: " + operator, "value2: " + value2);
 
-    display.textContent = value1;
+    display.textContent = lastExpression;
 }
 //an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
 // switch:

@@ -7,14 +7,12 @@ let value2 ="";
 let operator = "";
 let result = "";
 let displayValue = "";
-let lastExpression = "";
 
 
 function buttonClick(event) {
     let clickedButton = event.target;
     let buttonValue = clickedButton.textContent;
 
-    //an idea i have, if its an operator you need to switch inputs from value1 to value 2, if its equal it calculates based on the operator,
     switch (buttonValue) {
         case "C":
             clearCalculator();
@@ -59,19 +57,19 @@ function buttonClick(event) {
 function clearCalculator() {
     value1 = "";
     value2 = "";
-    display.textContent = "";
+    display.textContent = "0";
     operator = "";
     result = "";
     lastExpression ="";
     displayValue = "";
+    lastResult.textContent = "";
 }
 
 function handleOperator(symbol) {
     //if there is no value1, meaning no numbers pressed, it wont handle an operator. also if an operator exists it wont do anything either.
-    if (!value1 || operator){
+    if (!value1 || operator !== ""){
          return;
     }
-
     displayValue += symbol;
     value2 = value1;
     operator = symbol;
@@ -105,6 +103,12 @@ function calculateValues() {
         result = finalResult;
         displayValue += `${result}`;
     }
+    lastResult.textContent = displayValue;
+    localStorage.setItem("lastExpression", displayValue);
+
+    value1 = "";
+    value2 ="";
+    operator = "";
 }
 
 calculator.addEventListener("mousedown", buttonClick);

@@ -30,7 +30,7 @@ function buttonClick(event) {
             equalClicked = false;
             break;
         case "=":
-            if (equalClicked !== true) {
+            if (value1 && operator && value2 && equalClicked !== true) {
             displayValue += buttonValue;
             calculateValues();
             equalClicked = true;

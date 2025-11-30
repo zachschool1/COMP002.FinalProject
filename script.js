@@ -12,6 +12,7 @@ let value2 ="";
 let operator = "";
 let result = "";
 let displayValue = "";
+let equalClicked = false;
 
 
 
@@ -19,13 +20,21 @@ function buttonClick(event) {
     let clickedButton = event.target;
     let buttonValue = clickedButton.textContent;
 
+    if (equalClicked && buttonValue !== "C") {
+        return;
+    }
+
     switch (buttonValue) {
         case "C":
             clearCalculator();
+            equalClicked = false;
             break;
         case "=":
-            displayValue +=buttonValue;
+            if (equalClicked !== true) {
+            displayValue += buttonValue;
             calculateValues();
+            equalClicked = true;
+            }
             break;
         case "+":
         case "-":
@@ -35,7 +44,7 @@ function buttonClick(event) {
             break;
         case "0":
             //if no value1 or value2, do nothing. this fixes leading 0s
-            if (!value1) {
+            if (!value1 && !value2) {
                 break;
             }
         case "1":
@@ -56,8 +65,7 @@ function buttonClick(event) {
     display.textContent = displayValue || 0;
 
     console.log("value1: " + value1, "operator: " + operator, "value2: " + value2, "result " + result);
-    lastExpression = `${displayValue}${result}`;
-    console.log(lastExpression);
+
 }
 
 function clearCalculator() {
@@ -115,6 +123,7 @@ function calculateValues() {
     value1 = "";
     value2 ="";
     operator = "";
+
 }
 
 calculator.addEventListener("mousedown", buttonClick);
